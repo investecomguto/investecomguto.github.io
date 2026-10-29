@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análise gratuita da sua carteira · Augusto Tissot</title>
+<meta name="description" content="Augusto Tissot, consultor de investimentos CEA na API Capital, analisa gratuitamente a carteira de famílias com patrimônio a partir de R$ 500 mil.">
+<meta property="og:title" content="Análise gratuita da sua carteira">
+<meta property="og:description" content="Descubra quanto a sua carteira paga em custos escondidos, onde está concentrada e se combina com os objetivos da sua família.">
+<meta property="og:image" content="assets/augusto.jpg">
+<!-- Folha oficial da API Capital: fontes, tokens e componentes -->
+<link rel="stylesheet" href="https://lebeninca.github.io/api-capital-design-system/tokens/api-capital.css">
+<link rel="icon" href="https://design.apicapital.com.br/assets/favicon/svg/api_capital_favicon.svg">
+<style>
+  html, body { margin: 0; overflow-x: clip; }
+  body { background: var(--api-fundo); color: var(--api-texto); font-family: var(--api-corpo-font-family);
+         font-size: var(--api-corpo-font-size); line-height: var(--api-corpo-line-height); }
+  .faixa { padding: var(--api-x16) max(var(--api-x6), env(safe-area-inset-left)); }
+  .faixa.cinza { background: var(--api-fundo-secao); }
+  .faixa.escura { background: var(--api-fundo-escuro); color: var(--api-sobre-escuro); }
+  .miolo { max-width: 1080px; margin: 0 auto; }
+  .leitura { max-width: 640px; }
+
+  .topo { display: flex; align-items: center; justify-content: space-between; height: 64px;
+          padding: 0 max(var(--api-x6), env(safe-area-inset-left)); background: var(--api-fundo); }
+  .topo img { height: 30px; width: auto; display: block; }
+  .topo a { font-size: 15px; font-weight: 600; color: var(--api-acao); text-decoration: none; }
+
+  h1 { font-family: var(--api-display-font-family); font-weight: 500; font-size: clamp(36px, 5vw, 52px);
+       line-height: 1.12; letter-spacing: -0.96px; margin: 0; color: var(--api-azul); text-wrap: balance; }
+  h2 { font-family: var(--api-titulo-de-secao-font-family); font-weight: 500; font-size: clamp(28px, 3.6vw, 36px);
+       line-height: 1.2; letter-spacing: -0.4px; margin: 0; color: var(--api-azul); text-wrap: balance; }
+  .escura h2 { color: var(--api-sobre-escuro); }
+  h3 { font-family: var(--api-corpo-font-family); font-size: 19px; font-weight: 600; line-height: 1.35; margin: 0 0 var(--api-x2); color: var(--api-azul); }
+  p { margin: 0 0 var(--api-x4); }
+  .linha-fina { font-size: 19px; line-height: 1.55; margin-top: var(--api-x6); }
+  .fio { width: 80px; height: 2px; border: 0; background: var(--api-fio); margin: var(--api-x4) 0 var(--api-x6); }
+  .escura .fio { background: var(--api-sobre-escuro); }
+
+  /* Abertura: texto + foto */
+  .abertura { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--api-x10); align-items: center; }
+  .abertura img { width: 100%; height: auto; border-radius: var(--api-canto); display: block; }
+  .abertura .assinatura { margin-top: var(--api-x6); font-size: 15px; }
+  .abertura .assinatura b { display: block; font-family: var(--api-display-font-family); font-weight: 500; font-size: 22px; color: var(--api-azul); }
+  .acoes { display: flex; flex-wrap: wrap; gap: var(--api-x4); align-items: center; margin-top: var(--api-x10); }
+  .nota { font-size: 14px; color: var(--api-texto-fraco); }
+  @media (max-width: 820px) { .abertura { grid-template-columns: 1fr; } .abertura img { max-width: 420px; } }
+
+  .grade { display: grid; gap: var(--api-x6); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); margin-top: var(--api-x10); }
+  .card { background: var(--api-fundo); border-radius: var(--api-canto); padding: var(--api-x10); }
+  .card p { margin: 0; }
+
+  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: var(--api-x10); margin-top: var(--api-x10); }
+  @media (max-width: 720px) { .duas { grid-template-columns: 1fr; } }
+  .lista { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--api-x4); }
+  .lista li { padding-left: 28px; position: relative; }
+  .lista li svg { position: absolute; left: 0; top: 4px; width: 18px; height: 18px; stroke: var(--api-azul); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .passos { display: grid; gap: var(--api-x6); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: var(--api-x10); }
+  .passos h3 b { font-feature-settings: "tnum"; }
+
+  .numeros { display: flex; flex-wrap: wrap; gap: var(--api-x10); margin-top: var(--api-x10); }
+  .numeros b { display: block; font-family: var(--api-numero-font-family); font-weight: 700; font-size: 40px; line-height: 1.1;
+               letter-spacing: -0.4px; font-feature-settings: "tnum"; color: var(--api-azul); }
+  .numeros b.destaque { color: var(--api-destaque); }
+  .numeros span { font-size: 15px; }
+
+  /* Formulário */
+  form { background: var(--api-fundo); color: var(--api-texto); border-radius: var(--api-canto); padding: var(--api-x10);
+         display: grid; gap: var(--api-x6); margin-top: var(--api-x10); max-width: 640px; }
+  .campo { display: grid; gap: var(--api-x2); }
+  label, legend { font-size: 15px; font-weight: 600; }
+  input[type=text], input[type=email], input[type=tel], select, textarea {
+    font: inherit; font-size: 17px; height: 48px; padding: 0 var(--api-x4); border: 1px solid var(--api-borda);
+    border-radius: var(--api-canto); background: var(--api-fundo); color: var(--api-texto); box-sizing: border-box; width: 100%; }
+  textarea { height: auto; min-height: 96px; padding: 12px var(--api-x4); resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 3px solid var(--api-acao-secundaria); outline-offset: 2px; border-color: var(--api-acao); }
+  fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: var(--api-x2); }
+  .opcoes { display: flex; flex-wrap: wrap; gap: var(--api-x2) var(--api-x6); font-size: 17px; }
+  .opcoes label { font-weight: 400; display: flex; align-items: center; gap: var(--api-x2); }
+  input[type=checkbox], input[type=radio] { appearance: none; width: 16px; height: 16px; margin: 0; border: 1px solid var(--api-borda); background: var(--api-fundo); flex: none; display: grid; place-items: center; }
+  input[type=checkbox] { border-radius: 4px; }
+  input[type=radio] { border-radius: 50%; }
+  input[type=checkbox]:checked, input[type=radio]:checked { background: var(--api-acao); border-color: var(--api-acao); }
+  input[type=checkbox]:checked::after { content: ""; width: 4px; height: 8px; border: solid var(--api-branco); border-width: 0 2px 2px 0; transform: rotate(45deg) translate(-1px, -1px); }
+  input[type=radio]:checked::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--api-branco); }
+  .consentimento { font-weight: 400; font-size: 15px; display: flex; gap: var(--api-x2); align-items: flex-start; line-height: 1.45; }
+  .consentimento input { margin-top: 3px; }
+  .aviso { border: 1px solid var(--api-erro); border-radius: var(--api-canto); padding: var(--api-x4); font-size: 15px; }
+  .aviso.ok { border-color: var(--api-ok); }
+  .api-botao-primario, button[type=submit] { justify-self: start; }
+  button[type=submit] { height: 48px; padding: 0 var(--api-x6); border: 0; border-radius: var(--api-canto); background: var(--api-acao);
+                        color: var(--api-sobre-escuro); font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; }
+  button[type=submit]:hover { background: var(--api-acao-hover); }
+  button[disabled] { background: var(--api-fundo-bloco); color: var(--api-texto-fraco); cursor: default; }
+  .botao { display: inline-flex; align-items: center; height: 48px; padding: 0 var(--api-x6); border-radius: var(--api-canto);
+           background: var(--api-acao); color: var(--api-sobre-escuro); font-weight: 600; text-decoration: none; }
+  .botao:hover { background: var(--api-acao-hover); }
+
+  footer { padding: var(--api-x16) max(var(--api-x6), env(safe-area-inset-left)); font-size: 14px; color: var(--api-texto-fraco); }
+  footer img { height: 28px; width: auto; display: block; margin-bottom: var(--api-x4); }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <img src="https://design.apicapital.com.br/assets/logo/svg/api_capital_logo03_azul.svg" alt="API Capital">
+  <a href="#analise">Pedir análise</a>
+</header>
+
+<section class="faixa"><div class="miolo abertura">
+  <div>
+    <h1>Quanto a sua carteira está custando para a sua família?</h1>
+    <p class="linha-fina">Eu analiso gratuitamente os seus investimentos e mostro, em linguagem simples, onde estão os custos escondidos, os riscos e o que pode melhorar.</p>
+    <div class="assinatura"><b>Augusto Tissot</b>Consultor de investimentos CEA na API Capital</div>
+    <div class="acoes">
+      <a class="botao" href="#analise">Quero minha análise gratuita</a>
+      <span class="nota">Para famílias com patrimônio a partir de R$ 500 mil</span>
+    </div>
+  </div>
+  <img src="assets/augusto.jpg" alt="Augusto Tissot, consultor de investimentos" width="1080" height="1350">
+</div></section>
+
+<section class="faixa cinza"><div class="miolo">
+  <div class="leitura">
+    <h2>O que a análise mostra</h2>
+    <hr class="fio">
+    <p>Você recebe uma leitura completa da carteira atual, sem compromisso de contratar nada.</p>
+  </div>
+  <div class="grade">
+    <div class="card"><h3>Distribuição da carteira</h3><p>Como o seu dinheiro está dividido entre renda fixa, fundos, ações, previdência e exterior, e onde a divisão pode melhorar.</p></div>
+    <div class="card"><h3>Custos escondidos</h3><p>Taxas de administração, performance e comissões que saem do seu bolso todo ano sem aparecer no extrato.</p></div>
+    <div class="card"><h3>Riscos e concentração</h3><p>Quanto depende de um único banco, emissor ou moeda, e o que acontece com a carteira num cenário ruim.</p></div>
+    <div class="card"><h3>Aderência aos objetivos</h3><p>Se a carteira combina com o que a sua família quer: aposentadoria, sucessão, liquidez ou um projeto específico.</p></div>
+  </div>
+</div></section>
+
+<section class="faixa"><div class="miolo">
+  <div class="leitura">
+    <h2>Para quem é</h2>
+    <hr class="fio">
+  </div>
+  <div class="duas">
+    <div>
+      <h3>Faz sentido para você se</h3>
+      <ul class="lista">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Sua família tem a partir de R$ 500 mil investidos</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Seus investimentos estão espalhados em vários bancos e corretoras</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Você desconfia que o gerente ou assessor indica o que é bom para ele</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Você quer organizar o patrimônio pensando nos filhos e na sucessão</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Não é para você se</h3>
+      <ul class="lista">
+        <li><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Você procura dica de ação para ganhar rápido</li>
+        <li><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Você ainda está montando a reserva de emergência</li>
+        <li><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Você quer só uma indicação pontual de produto</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="faixa cinza"><div class="miolo">
+  <div class="leitura">
+    <h2>Como funciona</h2>
+    <hr class="fio">
+  </div>
+  <div class="passos">
+    <div class="card"><h3><b>1.</b> Você preenche</h3><p>Dois minutos de formulário, aqui embaixo. Nenhum dado de conta ou senha é pedido.</p></div>
+    <div class="card"><h3><b>2.</b> Conversamos</h3><p>Eu te chamo para uma conversa de 30 minutos e você me envia os extratos que quiser analisar.</p></div>
+    <div class="card"><h3><b>3.</b> Você recebe a análise</h3><p>Apresento o que encontrei e os pontos de melhoria. Se quiser seguir comigo, conversamos sobre a consultoria.</p></div>
+  </div>
+</div></section>
+
+<section class="faixa"><div class="miolo">
+  <div class="leitura">
+    <h2>Por que comigo</h2>
+    <hr class="fio">
+    <p>Sou consultor de investimentos certificado CEA pela ANBIMA e atuo na API Capital, consultoria independente registrada na CVM. Consultor não vende produto: quem me paga é o cliente, nunca o banco ou a corretora. Por isso posso olhar a sua carteira inteira e dizer o que realmente faz sentido.</p>
+  </div>
+  <div class="numeros">
+    <div><b class="destaque">R$ 1,77 bi</b><span>sob consultoria na API Capital</span></div>
+    <div><b>0</b><span>comissão de produto</span></div>
+    <div><b>CEA</b><span>certificação ANBIMA</span></div>
+  </div>
+</div></section>
+
+<section class="faixa escura" id="analise"><div class="miolo">
+  <div class="leitura">
+    <h2>Peça a sua análise gratuita</h2>
+    <hr class="fio">
+    <p>Respondo pessoalmente, em até um dia útil.</p>
+  </div>
+
+  <form id="form" novalidate>
+    <div class="campo"><label for="nome">Nome completo</label><input type="text" id="nome" name="nome" autocomplete="name" required></div>
+    <div class="campo"><label for="email">E-mail</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+    <div class="campo"><label for="whatsapp">WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" placeholder="(51) 99999-9999" required></div>
+    <div class="campo"><label for="patrimonio">Patrimônio investido aproximado</label>
+      <select id="patrimonio" name="patrimonio" required>
+        <option value="">Selecione uma faixa</option>
+        <option>Abaixo de R$ 500 mil</option>
+        <option>R$ 500 mil a R$ 1 milhão</option>
+        <option>R$ 1 milhão a R$ 3 milhões</option>
+        <option>R$ 3 milhões a R$ 10 milhões</option>
+        <option>Acima de R$ 10 milhões</option>
+      </select>
+    </div>
+    <div class="aviso" id="aviso-faixa" hidden>A análise gratuita é feita a partir de R$ 500 mil investidos. Você pode enviar mesmo assim: vou te indicar conteúdos que ajudam na fase de construção do patrimônio.</div>
+    <fieldset><legend>Onde estão seus investimentos hoje</legend>
+      <div class="opcoes">
+        <label><input type="checkbox" name="onde" value="Banco tradicional">Banco tradicional</label>
+        <label><input type="checkbox" name="onde" value="Corretora">Corretora</label>
+        <label><input type="checkbox" name="onde" value="Previdência">Previdência</label>
+        <label><input type="checkbox" name="onde" value="Exterior">Exterior</label>
+      </div>
+    </fieldset>
+    <fieldset><legend>Principal objetivo da família</legend>
+      <div class="opcoes">
+        <label><input type="radio" name="objetivo" value="Aposentadoria">Aposentadoria</label>
+        <label><input type="radio" name="objetivo" value="Sucessão">Sucessão e herança</label>
+        <label><input type="radio" name="objetivo" value="Proteção">Proteger o patrimônio</label>
+        <label><input type="radio" name="objetivo" value="Organizar">Organizar tudo</label>
+      </div>
+    </fieldset>
+    <div class="campo"><label for="mensagem">Algo que eu deva saber? <span class="nota">(opcional)</span></label><textarea id="mensagem" name="mensagem"></textarea></div>
+    <label class="consentimento"><input type="checkbox" id="lgpd" name="lgpd" required>Autorizo o uso destes dados apenas para Augusto Tissot entrar em contato sobre a análise. Eles não serão compartilhados com terceiros.</label>
+    <input type="text" name="site" tabindex="-1" autocomplete="off" hidden>
+    <div class="aviso" id="erro" role="alert" hidden></div>
+    <button type="submit" id="enviar">Quero minha análise gratuita</button>
+  </form>
+  <div class="aviso ok" id="sucesso" role="status" hidden style="background:var(--api-fundo);color:var(--api-texto);max-width:640px;margin-top:var(--api-x10)">
+    <b>Pedido recebido.</b> Obrigado! Vou te chamar no WhatsApp em até um dia útil para combinarmos a conversa.
+  </div>
+</div></section>
+
+<footer><div class="miolo">
+  <img src="https://design.apicapital.com.br/assets/logo/svg/api_capital_logo03_azul.svg" alt="API Capital">
+  Augusto Tissot · Consultor de investimentos CEA · API Capital Investimentos, consultoria de valores mobiliários registrada na CVM.
+  Conteúdo educativo. A análise gratuita não constitui recomendação de investimento.
+</div></footer>
+
+<script>
+  // Endereço do Apps Script que grava no Drive e avisa por e-mail (preencher após publicar o script)
+  const ENDPOINT = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
+
+  const form = document.getElementById('form');
+  const erro = document.getElementById('erro');
+  const faixa = document.getElementById('patrimonio');
+  faixa.addEventListener('change', () => {
+    document.getElementById('aviso-faixa').hidden = faixa.value !== 'Abaixo de R$ 500 mil';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    erro.hidden = true;
+    const d = new FormData(form);
+    if (d.get('site')) return; // campo-isca contra robôs
+    const faltando = [];
+    if (!d.get('nome').trim()) faltando.push('nome');
+    if (!/^\S+@\S+\.\S+$/.test(d.get('email'))) faltando.push('e-mail válido');
+    if (d.get('whatsapp').replace(/\D/g, '').length < 10) faltando.push('WhatsApp com DDD');
+    if (!d.get('patrimonio')) faltando.push('faixa de patrimônio');
+    if (!d.get('lgpd')) faltando.push('autorização de contato');
+    if (faltando.length) {
+      erro.innerHTML = '<b>Falta preencher:</b> ' + faltando.join(', ') + '.';
+      erro.hidden = false; return;
+    }
+    const dados = {
+      nome: d.get('nome').trim(), email: d.get('email').trim(), whatsapp: d.get('whatsapp').trim(),
+      patrimonio: d.get('patrimonio'), onde: d.getAll('onde').join(', '), objetivo: d.get('objetivo') || '',
+      mensagem: d.get('mensagem').trim(), origem: new URLSearchParams(location.search).get('origem') || 'instagram',
+    };
+    if (!ENDPOINT.startsWith('https://script.google.com/')) {
+      // Sem a planilha ligada, o envio se perderia em silêncio
+      erro.innerHTML = '<b>O formulário ainda está sendo configurado.</b> Chame no Instagram @investecomguto enquanto isso.';
+      erro.hidden = false; return;
+    }
+    const botao = document.getElementById('enviar');
+    botao.disabled = true; botao.textContent = 'Enviando...';
+    try {
+      // text/plain evita a checagem prévia do navegador, que o Apps Script não responde
+      await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(dados) });
+      form.hidden = true;
+      document.getElementById('sucesso').hidden = false;
+    } catch {
+      erro.innerHTML = '<b>Não foi possível enviar.</b> Verifique a sua internet e tente de novo.';
+      erro.hidden = false;
+      botao.disabled = false; botao.textContent = 'Quero minha análise gratuita';
+    }
+  });
+</script>
+</body>
+</html>
