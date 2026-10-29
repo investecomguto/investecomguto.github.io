@@ -38,13 +38,29 @@
   .escura .fio { background: var(--api-sobre-escuro); }
 
   /* Abertura: texto + foto */
-  .abertura { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--api-x10); align-items: center; }
-  .abertura img { width: 100%; height: auto; border-radius: var(--api-canto); display: block; }
+  .abertura { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--api-x16); align-items: center; }
+  .abertura img { width: 100%; max-width: 320px; height: auto; border-radius: var(--api-canto); display: block; justify-self: end; }
   .abertura .assinatura { margin-top: var(--api-x6); font-size: 15px; }
   .abertura .assinatura b { display: block; font-family: var(--api-display-font-family); font-weight: 500; font-size: 22px; color: var(--api-azul); }
   .acoes { display: flex; flex-wrap: wrap; gap: var(--api-x4); align-items: center; margin-top: var(--api-x10); }
   .nota { font-size: 14px; color: var(--api-texto-fraco); }
-  @media (max-width: 820px) { .abertura { grid-template-columns: 1fr; } .abertura img { max-width: 420px; } }
+  @media (max-width: 820px) { .abertura { grid-template-columns: 1fr; gap: var(--api-x10); } .abertura img { max-width: 240px; justify-self: start; order: -1; } }
+
+  /* Faixa de abertura emocional: foto do acervo da API com véu azul de uma cor só */
+  .porque { position: relative; color: var(--api-sobre-escuro); background: var(--api-azul) url("https://design.apicapital.com.br/assets/foto/png/api_capital_foto_ceu_nevoa.png") center / cover no-repeat; }
+  .porque::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--api-azul) 0%, rgba(13,42,84,0.79) 45%, rgba(13,42,84,0.25) 100%); }
+  .porque .miolo { position: relative; padding-block: var(--api-x16); }
+  .porque h2 { color: var(--api-sobre-escuro); font-size: clamp(32px, 4.4vw, 48px); max-width: 16ch; }
+  .porque p { max-width: 46ch; font-size: 19px; line-height: 1.6; margin-top: var(--api-x6); }
+  .citacao { font-family: var(--api-citacao-font-family); font-style: italic; font-size: 22px; line-height: 1.45; margin: var(--api-x10) 0 0; color: var(--api-azul); max-width: 40ch; }
+
+  .perguntas { display: grid; gap: var(--api-x4); margin-top: var(--api-x10); max-width: 760px; }
+  details { background: var(--api-fundo); border-radius: var(--api-canto); padding: var(--api-x6); }
+  summary { cursor: pointer; font-weight: 600; color: var(--api-azul); font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: var(--api-x4); }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-weight: 400; font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { margin: var(--api-x4) 0 0; }
 
   .grade { display: grid; gap: var(--api-x6); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); margin-top: var(--api-x10); }
   .card { background: var(--api-fundo); border-radius: var(--api-canto); padding: var(--api-x10); }
@@ -98,6 +114,8 @@
   .botao:hover { background: var(--api-acao-hover); }
 
   footer { padding: var(--api-x16) max(var(--api-x6), env(safe-area-inset-left)); font-size: 14px; color: var(--api-texto-fraco); }
+  footer a { color: var(--api-acao-secundaria); }
+  footer p { margin: 0 0 var(--api-x2); }
   footer img { height: 28px; width: auto; display: block; margin-bottom: var(--api-x4); }
 </style>
 </head>
@@ -119,6 +137,11 @@
     </div>
   </div>
   <img src="assets/augusto.jpg" alt="Augusto Tissot, consultor de investimentos" width="1080" height="1350">
+</div></section>
+
+<section class="porque"><div class="miolo" style="padding-left:max(var(--api-x6), env(safe-area-inset-left));padding-right:max(var(--api-x6), env(safe-area-inset-right))">
+  <h2>Por quem você construiu o seu patrimônio?</h2>
+  <p>Foram anos de trabalho para dar segurança a quem você ama. A pergunta que importa não é só quanto ele rende, e sim se ele está protegido, organizado e pronto para passar adiante.</p>
 </div></section>
 
 <section class="faixa cinza"><div class="miolo">
@@ -181,8 +204,24 @@
   </div>
   <div class="numeros">
     <div><b class="destaque">R$ 1,77 bi</b><span>sob consultoria na API Capital</span></div>
+    <div><b>1.000+</b><span>famílias atendidas pela API</span></div>
+    <div><b>3</b><span>regiões: Brasil, EUA e Europa</span></div>
     <div><b>0</b><span>comissão de produto</span></div>
-    <div><b>CEA</b><span>certificação ANBIMA</span></div>
+  </div>
+  <p class="citacao">"Não vendo produto. Ajudo a sua família a decidir melhor."</p>
+</div></section>
+
+<section class="faixa cinza"><div class="miolo">
+  <div class="leitura">
+    <h2>Perguntas frequentes</h2>
+    <hr class="fio">
+  </div>
+  <div class="perguntas">
+    <details><summary>A análise é gratuita mesmo?</summary><p>Sim. Você recebe a análise completa sem pagar nada e sem obrigação de contratar. Se fizer sentido seguir comigo depois, a gente conversa sobre a consultoria.</p></details>
+    <details><summary>Vou precisar passar senha ou acesso às minhas contas?</summary><p>Nunca. Basta enviar os extratos ou um print das posições. Eu não movimento nada e não peço senha de banco ou corretora.</p></details>
+    <details><summary>Preciso tirar o dinheiro de onde ele está?</summary><p>Não. A consultoria funciona com os investimentos onde eles já estão. Eu oriento, e você decide e executa na sua instituição.</p></details>
+    <details><summary>Qual a diferença entre consultor, assessor e gerente?</summary><p>O gerente é funcionário do banco e tem metas de produto. O assessor é remunerado pela corretora, por comissão. O consultor é pago só pelo cliente, por isso pode recomendar qualquer caminho sem conflito de interesse.</p></details>
+    <details><summary>Meus dados ficam seguros?</summary><p>Ficam. As informações do formulário são usadas só para eu entrar em contato com você e não são compartilhadas com ninguém.</p></details>
   </div>
 </div></section>
 
@@ -237,8 +276,9 @@
 
 <footer><div class="miolo">
   <img src="https://design.apicapital.com.br/assets/logo/svg/api_capital_logo03_azul.svg" alt="API Capital">
-  Augusto Tissot · Consultor de investimentos CEA · API Capital Investimentos, consultoria de valores mobiliários registrada na CVM.
-  Conteúdo educativo. A análise gratuita não constitui recomendação de investimento.
+  <p>Augusto Tissot · Consultor de investimentos CEA · API Capital Investimentos, consultoria de valores mobiliários registrada na CVM sob o nº 20.609.</p>
+  <p class="links-rodape"><a href="https://www.instagram.com/investecomguto/">Instagram @investecomguto</a> · <a href="https://apicapital.com.br/cartas">Cartas mensais da API</a> · <a href="https://apicapital.com.br/compliance">Documentos regulatórios</a></p>
+  <p>Conteúdo educativo. A análise gratuita não constitui recomendação de investimento.</p>
 </div></footer>
 
 <script>
