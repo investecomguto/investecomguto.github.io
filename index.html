@@ -43,6 +43,7 @@
   .abertura .assinatura { margin-top: var(--api-x6); font-size: 15px; }
   .abertura .assinatura b { display: block; font-family: var(--api-display-font-family); font-weight: 500; font-size: 22px; color: var(--api-azul); }
   .acoes { display: flex; flex-wrap: wrap; gap: var(--api-x4); align-items: center; margin-top: var(--api-x10); }
+  .chamada { font-size: 19px; font-weight: 600; line-height: 1.45; color: var(--api-azul); margin: var(--api-x10) 0 0; max-width: 36ch; }
   .nota { font-size: 14px; color: var(--api-texto-fraco); }
   @media (max-width: 820px) { .abertura { grid-template-columns: 1fr; gap: var(--api-x10); } .abertura img { max-width: 180px; justify-self: start; order: -1; } }
 
@@ -132,10 +133,11 @@
 
 <section class="faixa"><div class="miolo abertura">
   <div>
-    <h1>Quem cuida do seu dinheiro trabalha para você ou para o banco?</h1>
-    <p class="linha-fina">Eu analiso de graça a carteira da sua família e mostro, com números, quanto ela rende de verdade, quanto custa e quem ganha com cada aplicação.</p>
+    <h1>Eu cuido do dinheiro da sua família para você não precisar se preocupar.</h1>
+    <p class="linha-fina">Organizo os investimentos, corto custos escondidos, protejo o patrimônio e planejo a sucessão. Sem comissão de banco: quem me paga é você, então trabalho para você.</p>
     <div class="assinatura"><b>Augusto Tissot</b>Consultor de investimentos CEA na API Capital</div>
-    <div class="acoes">
+    <p class="chamada">Que tal descobrir quanto está fugindo da sua carteira em taxas e comissões escondidas?</p>
+    <div class="acoes" style="margin-top:var(--api-x6)">
       <a class="botao" href="#analise">Quero minha análise gratuita</a>
       <span class="nota">Para famílias com patrimônio a partir de R$ 500 mil</span>
     </div>
@@ -162,7 +164,8 @@
       <tr><td>Comissão</td><td>Zerada ou devolvida para você</td><td>Fica com quem indicou</td></tr>
     </tbody>
   </table>
-  <p class="conclusao">Na consultoria, <b>quem me contrata é você</b>, não o banco. Quer saber quanto a sua carteira paga hoje?</p>
+  <p class="conclusao">Na consultoria, <b>quem me contrata é você</b>, não o banco.</p>
+  <p class="chamada">Será que o seu dinheiro está no melhor produto para você, ou no que paga mais comissão para quem indicou?</p>
   <div class="acoes" style="margin-top:var(--api-x6)"><a class="botao" href="#analise">Quero minha análise gratuita</a></div>
 </div></section>
 
@@ -201,6 +204,8 @@
     <div><b>20</b><span>estados do país</span></div>
   </div>
   <p class="citacao">"Não vendo produto. Ajudo a sua família a decidir melhor."</p>
+  <p class="chamada">Vamos descobrir se existe algum risco escondido na sua carteira?</p>
+  <div class="acoes" style="margin-top:var(--api-x6)"><a class="botao" href="#analise">Quero minha análise gratuita</a></div>
 </div></section>
 
 <section class="faixa cinza"><div class="miolo">
@@ -220,9 +225,9 @@
 
 <section class="faixa escura" id="analise"><div class="miolo">
   <div class="leitura">
-    <h2>Peça a sua análise gratuita</h2>
+    <h2>Se você precisasse do dinheiro amanhã, quanto conseguiria resgatar?</h2>
     <hr class="fio">
-    <p>Respondo pessoalmente, em até um dia útil.</p>
+    <p>Na análise gratuita você descobre isso, quanto paga em taxas e onde estão os riscos da sua carteira. Respondo pessoalmente, em até um dia útil.</p>
   </div>
 
   <form id="form" novalidate>
