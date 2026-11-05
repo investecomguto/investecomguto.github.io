@@ -99,12 +99,12 @@
   fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: var(--api-x2); }
   .opcoes { display: flex; flex-wrap: wrap; gap: var(--api-x2) var(--api-x6); font-size: 17px; }
   .opcoes label { font-weight: 400; display: flex; align-items: center; gap: var(--api-x2); }
-  input[type=checkbox], input[type=radio] { appearance: none; width: 16px; height: 16px; margin: 0; border: 1px solid var(--api-borda); background: var(--api-fundo); flex: none; display: grid; place-items: center; }
+  input[type=checkbox], input[type=radio] { appearance: none; width: 22px; height: 22px; margin: 0; border: 2px solid var(--api-acao); background: var(--api-fundo); flex: none; display: grid; place-items: center; }
   input[type=checkbox] { border-radius: 4px; }
   input[type=radio] { border-radius: 50%; }
   input[type=checkbox]:checked, input[type=radio]:checked { background: var(--api-acao); border-color: var(--api-acao); }
-  input[type=checkbox]:checked::after { content: ""; width: 4px; height: 8px; border: solid var(--api-branco); border-width: 0 2px 2px 0; transform: rotate(45deg) translate(-1px, -1px); }
-  input[type=radio]:checked::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--api-branco); }
+  input[type=checkbox]:checked::after { content: ""; width: 6px; height: 11px; border: solid var(--api-branco); border-width: 0 3px 3px 0; transform: rotate(45deg) translate(-1px, -1px); }
+  input[type=radio]:checked::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--api-branco); }
   .consentimento { font-weight: 400; font-size: 15px; display: flex; gap: var(--api-x2); align-items: flex-start; line-height: 1.45; }
   .consentimento input { margin-top: 3px; }
   .aviso { border: 1px solid var(--api-erro); border-radius: var(--api-canto); padding: var(--api-x4); font-size: 15px; }
@@ -194,7 +194,7 @@
 
 <section class="faixa"><div class="miolo">
   <div class="leitura">
-    <h2>Por que comigo</h2>
+    <h2>Por que comigo?</h2>
     <hr class="fio">
     <p>Sou consultor de investimentos certificado CEA pela ANBIMA e atuo na API Capital, consultoria independente registrada na CVM e entre as 6 principais do país no ranking do BTG Pactual.</p>
   </div>
@@ -244,7 +244,6 @@
         <option>Acima de R$ 10 milhões</option>
       </select>
     </div>
-    <div class="aviso" id="aviso-faixa" hidden>A análise gratuita é feita a partir de R$ 500 mil investidos. Você pode enviar mesmo assim: vou te indicar conteúdos que ajudam na fase de construção do patrimônio.</div>
     <fieldset><legend>Onde estão seus investimentos hoje</legend>
       <div class="opcoes">
         <label><input type="checkbox" name="onde" value="Banco tradicional">Banco tradicional</label>
@@ -285,10 +284,6 @@
 
   const form = document.getElementById('form');
   const erro = document.getElementById('erro');
-  const faixa = document.getElementById('patrimonio');
-  faixa.addEventListener('change', () => {
-    document.getElementById('aviso-faixa').hidden = faixa.value !== 'Abaixo de R$ 500 mil';
-  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
